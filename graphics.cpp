@@ -95,10 +95,6 @@ int connect::pattern(int arr[24], int& four)
 	 
 	sort(arr, arr + count +1);
 	four = 0;
-	for (int k = 0; k < count + 1; k++)
-	{
-		//cerr << "arr is" << arr[k] << endl;
-	}
 	// in a column, looking for 4 in same column then consecutive
 
 	for (int h = 0; h <= count; h ++)
@@ -117,13 +113,9 @@ int connect::pattern(int arr[24], int& four)
 				four++;
 			else;
 
-
 		}
 		if (four == 4)
-		{
-			//cerr << "column won" << endl;
 			return 9;
-		}
 		else
 			four = 0;
 	}
@@ -150,10 +142,7 @@ int connect::pattern(int arr[24], int& four)
 
 		}
 		if (four == 4)
-		{
-			//cerr << "row won" << endl;
 			return 9;
-		}
 		else
 			four = 0;
 	}
@@ -177,10 +166,7 @@ int connect::pattern(int arr[24], int& four)
 
 		}
 		if (four == 4)
-		{
-			//cerr << "diagonal down " << endl;
 			return 9;
-		}
 		else
 			four = 0;
 	}
@@ -192,7 +178,6 @@ int connect::pattern(int arr[24], int& four)
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
-			//cerr << "usek is " << use[k] << endl; 
 			if (use[k] == 47)
 				four++;
 			else if (use[k] == 56)
@@ -203,12 +188,8 @@ int connect::pattern(int arr[24], int& four)
 
 			
 		}
-		//cerr << "four is " << four << endl; 
 		if (four == 4)
-		{
-			//cerr << "diagonal up " << endl;
 			return 9;
-		}
 		else
 			four = 0;
 	}
@@ -221,12 +202,10 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 {
 
 	sort(arr, arr + count);
-	//cerr << "arr0 is " << arr[0] << "arr1 is " << arr[1] << "arr2" << arr[2] << endl;
 	int three = 0;
 	fourthmove1, fourthmove2 = 0;
 	//blank two blank row 6
 	if (count == 0 || count == 1 ) {
-		cerr << "im here " << endl; 
 		for (int h = 0; h <= count; h++)
 		{
 			for (int k = h ; k <= count; k++)
@@ -234,7 +213,6 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 				if (arr[h] + 1 == arr[k])
 				{
 					fourthmove1 = arr[k] + 1;
-					//cerr << "fourth1 is " << fourthmove1 << endl;
 					fourthmove2 = arr[k] - 1;
 					return 2;
 				}
@@ -254,7 +232,6 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
-			//cerr << "usek is " << use[k] << endl; 
 			if (use[k] == 51)
 				three++;
 			else if (use[k] == 61)
@@ -263,7 +240,6 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 
 
 		}
-		//cerr << "three is " << three << endl; 
 		if (three == 3)
 		{
 			fourthmove1 = 31 - diff;
@@ -293,7 +269,6 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
-			//cerr << "usek is " << use[k] << endl;
 			if (use[k] == 62)
 				three++;
 			else if (use[k] == 63)
@@ -353,12 +328,10 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 	for (int h = 0; h <= count; h++)
 	{
 		int diff = 47 - arr[h];
-		//cerr << "diff is " << diff << endl;
 		three++;
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
-			//cerr << "usek is " << use[k] << endl;
 			if (use[k] == 56)
 				three++;
 			else if (use[k] == 65)
@@ -412,12 +385,8 @@ void connect::playertwo()
 			int ytoreturn, rtoreturn, firstreturn, ffourth1, ffourth2 = 0; 
 
 			ytoreturn = threeinarow(collectY, yfourth1, yfourth2); //retunrs 5 or 0 
-			//cerr << "yfourth1 is " << yfourth1 << "yfourth2 is " << yfourth2 << endl; 
 			rtoreturn = threeinarow(collectR, rfourth1, rfourth2) *2; //returns 10 or 0 
-			//cerr << "rfourth1 is " << rfourth1 << "rfourth2 is " << rfourth2 << endl;
-			//cerr << "rtoreturn is " << rtoreturn << endl; 
 			firstreturn = threeinarow(collectR, ffourth1, ffourth2);//returns 2 or 0
-			//cerr << "firstreturn is " << firstreturn << endl; 
 			if (firstreturn == 2)
 				check = 1; 
 			else if (count == 0 || count ==1)  //first or second turn 
@@ -544,7 +513,6 @@ void connect::play()
 		collectR[count] = rmove; 
 		display();
 		maybe = pattern(collectR, fourR); //returns 0 or 9
-		//cerr << "maybe is " << maybe; 
 		if (maybe == 9)
 		{
 			end = 9;
@@ -556,13 +524,11 @@ void connect::play()
 		
 		//player two
 		playertwo(); //sets move
-		//cerr << "move is " << ymove << endl; 
 		check = 0; 
 		change('Y', ymove); 
 		collectY[count] = ymove;
 		display();
 		maybe = pattern(collectY, fourY);
-		//cerr << "mayb eis " << maybe << endl; 
 		if (maybe == 9)
 		{
 			end = 9;
