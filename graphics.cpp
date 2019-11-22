@@ -3,7 +3,7 @@
 #include <cctype>
 #include <algorithm>
 #include <cstdlib>
-//check how breaks in switch statements work with if then, might need to reorganize switch so that will go to block red after checking yellow
+
 using namespace std; 
 class connect
 {public:
