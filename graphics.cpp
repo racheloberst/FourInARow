@@ -3,22 +3,23 @@
 #include <cctype>
 #include <algorithm>
 #include <cstdlib>
-
+//check how breaks in switch statements work with if then, might need to reorganize switch so that will go to block red after checking yellow
 using namespace std; 
 class connect
-{public:
-
-	void display();
-	void change(char player, int move);
-	void play();
-	int bad(int move, int check1);
-	int convert(string tochange, int& move);
+{
+public:
 	connect();
-	int pattern(int arr[24], int& four);
-	void playertwo();
-	int threeinarow(int  arr[24], int& fourthmove1, int& fourthmove2); 
+	void play();
 	
-
+	
+private:
+	int bad(int move, int check1);
+	int convert(const string tochange, int& move);
+	void change(char player, int move);
+	void playertwo();
+	int threeinarow(int  arr[24], int& fourthmove1, int& fourthmove2);
+	int pattern(int arr[24], int& four);
+	void display();
 	int collectR[24] = {};
 	int collectY[24] = {};
 	int use[24] = {};
@@ -111,11 +112,14 @@ int connect::pattern(int arr[24], int& four)
 				four++;
 			else if (use[k] == 61)
 				four++;
-			else;
+			else {};
+
 
 		}
 		if (four == 4)
+		{
 			return 9;
+		}
 		else
 			four = 0;
 	}
@@ -137,12 +141,14 @@ int connect::pattern(int arr[24], int& four)
 				four++;
 			else if (use[k] == 64)
 				four++;
-			else;
+			else {};
 			 
 
 		}
 		if (four == 4)
+		{
 			return 9;
+		}
 		else
 			four = 0;
 	}
@@ -162,11 +168,13 @@ int connect::pattern(int arr[24], int& four)
 				four++;
 			else if (use[k] == 64)
 				four++;
-			else;
+			else {};
 
 		}
 		if (four == 4)
+		{
 			return 9;
+		}
 		else
 			four = 0;
 	}
@@ -184,12 +192,14 @@ int connect::pattern(int arr[24], int& four)
 				four++;
 			else if (use[k] == 65)
 				four++;
-			else;
+			else {};
 
 			
 		}
 		if (four == 4)
+		{
 			return 9;
+		}
 		else
 			four = 0;
 	}
@@ -202,8 +212,11 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 {
 
 	sort(arr, arr + count);
+	
+	//cerr << "arr0 is " << arr[0] << "arr1 is " << arr[1] << "arr2" << arr[2] << endl;
 	int three = 0;
-	fourthmove1, fourthmove2 = 0;
+	fourthmove1 = 0;
+	fourthmove2 = 0;
 	//blank two blank row 6
 	if (count == 0 || count == 1 ) {
 		for (int h = 0; h <= count; h++)
@@ -213,15 +226,16 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 				if (arr[h] + 1 == arr[k])
 				{
 					fourthmove1 = arr[k] + 1;
+					//cerr << "fourth1 is " << fourthmove1 << endl;
 					fourthmove2 = arr[k] - 1;
 					return 2;
 				}
-				else;
+				else {};
 
 			}
 		}
 	}
-	else; 
+	
 	// in a column, looking for 3 in same column 
 
 	for (int h = 0; h <= count; h++)
@@ -232,14 +246,16 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
+			//cerr << "usek is " << use[k] << endl; 
 			if (use[k] == 51)
 				three++;
 			else if (use[k] == 61)
 				three++;
-			else;
+			else {};
 
 
 		}
+		//cerr << "three is " << three << endl; 
 		if (three == 3)
 		{
 			fourthmove1 = 31 - diff;
@@ -269,11 +285,12 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
+			//cerr << "usek is " << use[k] << endl;
 			if (use[k] == 62)
 				three++;
 			else if (use[k] == 63)
 				three++;
-			else;
+			else {};
 
 
 		}
@@ -307,7 +324,7 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 				three++;
 			else if (use[k] == 64)
 				three++;
-			else;
+			else {};
 
 		}
 		if (three == 3)
@@ -328,15 +345,17 @@ int connect::threeinarow(int arr[24], int& fourthmove1, int& fourthmove2)
 	for (int h = 0; h <= count; h++)
 	{
 		int diff = 47 - arr[h];
+		//cerr << "diff is " << diff << endl;
 		three++;
 		for (int k = h; k <= count; k++)
 		{
 			use[k] = arr[k] + diff;
+			//cerr << "usek is " << use[k] << endl;
 			if (use[k] == 56)
 				three++;
 			else if (use[k] == 65)
 				three++;
-			else;
+			else {};
 		}
 		if (three == 3)
 		{
@@ -385,8 +404,12 @@ void connect::playertwo()
 			int ytoreturn, rtoreturn, firstreturn, ffourth1, ffourth2 = 0; 
 
 			ytoreturn = threeinarow(collectY, yfourth1, yfourth2); //retunrs 5 or 0 
+			//cerr << "yfourth1 is " << yfourth1 << "yfourth2 is " << yfourth2 << endl; 
 			rtoreturn = threeinarow(collectR, rfourth1, rfourth2) *2; //returns 10 or 0 
+			//cerr << "rfourth1 is " << rfourth1 << "rfourth2 is " << rfourth2 << endl;
+			//cerr << "rtoreturn is " << rtoreturn << endl; 
 			firstreturn = threeinarow(collectR, ffourth1, ffourth2);//returns 2 or 0
+			//cerr << "firstreturn is " << firstreturn << endl; 
 			if (firstreturn == 2)
 				check = 1; 
 			else if (count == 0 || count ==1)  //first or second turn 
@@ -398,7 +421,7 @@ void connect::playertwo()
 			else 
 				check = 5; 
 			int tocheck = 0;
-			int col2, row2 = 0;
+			
 			switch (check)
 			{
 			case 1:
@@ -407,12 +430,12 @@ void connect::playertwo()
 					ymove = ffourth1;
 					break;
 				}
-				else if (bad(ffourth2, 1) == 1)
+				if (bad(ffourth2, 1) == 1)
 				{
 					ymove = ffourth2;
 					break;
 				}
-				else;
+				else {};
 			case 2:
 				while (tocheck == 0)
 				{
@@ -428,12 +451,12 @@ void connect::playertwo()
 					 ymove = yfourth1;
 					 break;
 				 }
-				 else if (bad(yfourth2, 1) == 1)
+				 if (bad(yfourth2, 1) == 1)
 				 {
 					 ymove = yfourth2;
 					 break;
 				 }
-				 else;
+				 else {};
 			case 4:
 				while (tocheck == 0)
 				{
@@ -448,12 +471,12 @@ void connect::playertwo()
 					ymove = rfourth1;
 					break;
 				}
-				else if (bad(rfourth2, 1) == 1)
+				if (bad(rfourth2, 1) == 1)
 				{
 					ymove = rfourth2;
 					break;
 				}
-				else;
+				else {};
 			case 6:
 				while (tocheck == 0)
 				{
@@ -513,35 +536,36 @@ void connect::play()
 		collectR[count] = rmove; 
 		display();
 		maybe = pattern(collectR, fourR); //returns 0 or 9
+		//cerr << "maybe is " << maybe; 
 		if (maybe == 9)
 		{
 			end = 9;
 			cout << "Player one you won!" << endl;
 			break;
 		}
-		else
-			; 
+		else {};
 		
 		//player two
 		playertwo(); //sets move
+		//cerr << "move is " << ymove << endl; 
 		check = 0; 
 		change('Y', ymove); 
 		collectY[count] = ymove;
 		display();
 		maybe = pattern(collectY, fourY);
+		//cerr << "mayb eis " << maybe << endl; 
 		if (maybe == 9)
 		{
 			end = 9;
 			cout << "Player two you won!" << endl;
 		}
-		else
-			;
+		else {};
 
 		count++;
 	}
 
 }
-int connect::convert(string tochange, int& move)  //sets equal to check1
+int connect::convert(const string tochange, int& move)  //sets equal to check1
 {
 	char char1 = tochange[0];
 	char char2 = tochange[1];
@@ -577,14 +601,15 @@ int connect::bad(int move, int check1) //sets equal to check
 		return 0;
 	else if (move == 0)
 		return 0;
-	else;
+	else {};
 	col = (move % 10);
 	row = ((move - col) / 10);
 	
 
 	if (row > 6 || col > 8 || row < 1 || col < 1)
 	{
-		cout << "position not on board" << endl;
+		
+		cout << "positio not on board" << endl;
 		return 0;
 	}
 	else if (corr[row - 1][col - 1] != EMPTY)
